@@ -1,0 +1,19 @@
+{
+  "name": "budget-manager-api",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env ./src/index",
+    "dev": "nodemon --env-file=.env ./src/index"
+  },
+  "author": "MBRBota",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "postgres": "^3.4.4"
+  }
+}
