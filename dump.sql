@@ -114,7 +114,8 @@ ALTER SEQUENCE public.expenses_expense_id_seq OWNED BY public.expenses.expense_i
 CREATE TABLE public.users (
     user_id integer NOT NULL,
     username character varying(255) NOT NULL,
-    password character varying(255) NOT NULL
+    password character varying(255) NOT NULL,
+    refresh_token character varying(255)
 );
 
 
@@ -183,7 +184,7 @@ COPY public.expenses (expense_id, sum, date, user_id, category_id) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (user_id, username, password) FROM stdin;
+COPY public.users (user_id, username, password, refresh_token) FROM stdin;
 \.
 
 
