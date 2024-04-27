@@ -2,6 +2,7 @@ import { Router } from "express";
 import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import HttpError from "../../../models/HttpError.js";
 
 const router = Router();
 
@@ -10,15 +11,15 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body.user;
   
     if (!username || !password)
-      throw new Error("Username and password are required.")
+      throw new HttpError("Username and password are required.", 400)
 
     const [foundUser] = await sql`SELECT username, password FROM users WHERE username=${ username }`
     if (!foundUser)
-      throw new Error("User does not exist.")
+      throw new HttpError("User does not exist.", 404)
 
     const matchPassword = await bcrypt.compare(password, foundUser.password)
     if (!matchPassword)
-      throw new Error("Wrong password.")
+      throw new HttpError("Wrong password.", 400)
 
     const accessToken = jwt.sign(
       { "username": foundUser.username },
@@ -41,7 +42,8 @@ router.post('/login', async (req, res) => {
       accessToken: accessToken
     })
   } catch (err) {
-    return res.status(418).json({
+    const statusCode = err.statusCode || 400
+    return res.status(statusCode).json({
       success: false,
       message: err.message
     })
