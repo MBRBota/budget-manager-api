@@ -1,5 +1,5 @@
 import { Router } from "express";
-import sql from "../../../database/db";
+import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 
 const router = Router();
@@ -11,8 +11,7 @@ router.post('/login', async (req, res) => {
     if (!username || !password)
       throw new Error("Username and password are required.")
 
-    const foundUser = await sql`SELECT username, password FROM users WHERE username=${ username }`
-    foundUser = foundUser.rows[0]
+    const [foundUser] = await sql`SELECT username, password FROM users WHERE username=${ username }`
     if (!foundUser)
       throw new Error("User does not exist.")
 

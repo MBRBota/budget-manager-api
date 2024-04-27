@@ -1,5 +1,5 @@
 import { Router } from "express";
-import sql from "../../../database/db";
+import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 
 const router = Router();
@@ -11,8 +11,8 @@ router.post('/register', async (req, res) => {
     if (!username || !password)
       throw new Error("All user register form fields are required.")
 
-    const userCheck = await sql`SELECT username FROM users WHERE username=${ username }`
-    if (userCheck.rows[0])
+    const [userCheck] = await sql`SELECT username FROM users WHERE username=${ username }`
+    if (userCheck)
       throw new Error("Username is already taken.")
 
     const hashedPassword = await bcrypt.hash(password, 10)
