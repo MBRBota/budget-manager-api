@@ -2,11 +2,10 @@ import { Router } from "express";
 import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 import HttpError from "../../../models/HttpError.js";
-import { errorHandler } from "../../../handlers/errorHandler.js";
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   try{
     const { username, password } = req.body.user;
 
@@ -25,7 +24,7 @@ router.post('/register', async (req, res) => {
       message: `New user ${ username } created successfully.`
     })
   } catch (err) {
-    errorHandler(err)
+    next(err)
   }
 })
 

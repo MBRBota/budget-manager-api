@@ -3,11 +3,10 @@ import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import HttpError from "../../../models/HttpError.js";
-import { errorHandler } from "../../../handlers/errorHandler.js";
 
 const router = Router();
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try{
     const { username, password } = req.body.user;
   
@@ -43,7 +42,7 @@ router.post('/login', async (req, res) => {
       accessToken: accessToken
     })
   } catch (err) {
-    errorHandler(err)
+    next(err)
   }
 
 })
