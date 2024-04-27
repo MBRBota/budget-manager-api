@@ -3,6 +3,7 @@ import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import HttpError from "../../../models/HttpError.js";
+import { errorHandler } from "../../../handlers/errorHandler.js";
 
 const router = Router();
 
@@ -42,11 +43,7 @@ router.post('/login', async (req, res) => {
       accessToken: accessToken
     })
   } catch (err) {
-    const statusCode = err.statusCode || 400
-    return res.status(statusCode).json({
-      success: false,
-      message: err.message
-    })
+    errorHandler(err)
   }
 
 })
