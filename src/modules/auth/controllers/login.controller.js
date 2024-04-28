@@ -1,8 +1,8 @@
 import { Router } from "express";
 import sql from "../../../database/db.js";
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import HttpError from "../../../models/HttpError.js";
+import { generateAccessToken, generateRefreshToken } from "../services/generateToken.service.js";
 
 const router = Router();
 
@@ -21,17 +21,8 @@ router.post('/login', async (req, res, next) => {
     if (!matchPassword)
       throw new HttpError("Wrong password.", 400)
 
-    const accessToken = jwt.sign(
-      { "username": foundUser.username },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '15m' }
-    )
-
-    const refreshToken = jwt.sign(
-      { "username": foundUser.username },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '1d' }
-    )
+    const accessToken = generateAccessToken(foundUser.username)
+    const refreshToken = generateRefreshToken(foundUser.username)
 
     await sql`UPDATE users SET refresh_token=${ refreshToken } WHERE username=${ username }`
 
