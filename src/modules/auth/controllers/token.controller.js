@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/token', async (req, res, next) => {
   try{
-    const refreshToken = req.cookies.jwtRefreshToken;
+    const refreshToken = req.cookies?.jwtRefreshToken;
   
     if (!refreshToken)
       throw new HttpError("Missing refresh token.", 401)
