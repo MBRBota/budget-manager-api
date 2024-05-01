@@ -28,7 +28,10 @@ router.get('/token', async (req, res, next) => {
         return res.status(200).json({
           success: true,
           message: `Access token refreshed.`,
-          accessToken: accessToken
+          data: {
+            username: decoded.username,
+            accessToken: accessToken
+          }
         })
       }
     )

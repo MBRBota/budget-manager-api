@@ -30,7 +30,10 @@ router.post('/login', async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: `Successfully logged into ${ username } account.`,
-      accessToken: accessToken
+      data: {
+        username: foundUser.username,
+        accessToken: accessToken
+      }
     })
   } catch (err) {
     next(err)
