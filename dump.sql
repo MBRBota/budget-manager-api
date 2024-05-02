@@ -42,7 +42,7 @@ CREATE TABLE public.categories (
     category_id integer NOT NULL,
     category_name character varying(255) NOT NULL,
     category_color character varying(8) NOT NULL,
-    user_id integer NOT NULL
+    user_id integer
 );
 
 
