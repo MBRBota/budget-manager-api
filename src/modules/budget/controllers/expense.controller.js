@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Expenses retrieved successfully.",
-      data: [...userExpenses]
+      data: { userExpenses: [...userExpenses] }
     })
   } catch (err) {
     next(err)
