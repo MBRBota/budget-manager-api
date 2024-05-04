@@ -3,7 +3,7 @@ import HttpError from "../../../models/HttpError.js";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
   try {
     const username = req.username
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
     const username = req.username
     const { categoryName, categoryColor } = req.body.category
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.patch('/', async (req, res) => {
+router.patch('/', async (req, res, next) => {
   try{
     const username = req.username
     const { categoryId, categoryName, categoryColor } = req.body.category
@@ -59,7 +59,7 @@ router.patch('/', async (req, res) => {
   }
 })
 
-router.delete('/', async (req, res) => {
+router.delete('/', async (req, res, next) => {
   try{
     const username = req.username
     const { categoryId } = req.body.category
