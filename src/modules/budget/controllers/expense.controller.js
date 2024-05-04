@@ -1,5 +1,5 @@
 import { Router } from "express";
-import HttpError from "../../../models/HttpError";
+import HttpError from "../../../models/HttpError.js";
 
 const router = Router();
 
