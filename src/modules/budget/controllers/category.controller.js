@@ -1,5 +1,6 @@
 import { Router } from "express";
 import HttpError from "../../../models/HttpError.js";
+import sql from "../../../database/db.js";
 
 const router = Router();
 
