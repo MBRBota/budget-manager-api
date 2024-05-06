@@ -5,6 +5,7 @@ import expenseController from "./expense.controller.js";
 
 const router = Router();
 
+// JWT verfication middleware for resource API calls
 router.use(verifyToken)
 router.use('/category', categoryController)
 router.use('/expense', expenseController)

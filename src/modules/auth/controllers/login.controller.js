@@ -17,6 +17,7 @@ router.post('/login', async (req, res, next) => {
     if (!foundUser)
       throw new HttpError("User does not exist.", 404)
 
+    // Compare request user introduced password to hashed password stored in database
     const matchPassword = await bcrypt.compare(password, foundUser.password)
     if (!matchPassword)
       throw new HttpError("Wrong password.", 400)
@@ -24,8 +25,10 @@ router.post('/login', async (req, res, next) => {
     const accessToken = generateAccessToken(foundUser.username)
     const refreshToken = generateRefreshToken(foundUser.username)
 
+    // Add/replace refresh token for newly logged in user
     await sql`UPDATE users SET refresh_token=${ refreshToken } WHERE username=${ username }`
 
+    // Max age set to 30 days
     res.cookie('jwtRefreshToken', refreshToken, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 })
     return res.status(200).json({
       success: true,

@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken"
 import HttpError from "../models/HttpError.js"
 
+
+// JWT verification middleware
 export const verifyToken = (req, res, next) => {
   try{
     const authHeader = req.headers['authorization']
     if (!authHeader)
       throw new HttpError("Unauthorized.", 401)
 
+    // Extract JWT token from "Bearer {token}" authorization header
     const token = authHeader.split(" ")[1]
 
     jwt.verify(

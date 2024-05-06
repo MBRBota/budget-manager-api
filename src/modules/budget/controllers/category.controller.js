@@ -8,7 +8,17 @@ router.get('/', async (req, res, next) => {
   try {
     const username = req.username
 
-    const userCategories = await sql`SELECT category_id, category_name, category_color FROM categories LEFT JOIN users USING (user_id) WHERE username=${username} OR user_id IS NULL`
+    // Retrieve default (null user-id rows) and user-made custom categories
+    const userCategories = await sql`
+      SELECT
+        category_id, category_name, category_color
+      FROM categories
+      LEFT JOIN users
+      USING (user_id)
+      WHERE
+        username=${username}
+        OR user_id IS NULL
+    `
 
     return res.status(200).json({
       success: true,
@@ -29,7 +39,12 @@ router.post('/', async (req, res, next) => {
       throw new HttpError("New category information incomplete/missing.", 400)
 
     const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`INSERT INTO categories (category_name, category_color, user_id) VALUES (${categoryName}, ${categoryColor}, ${userId})`
+    await sql`
+      INSERT INTO categories
+        (category_name, category_color, user_id)
+      VALUES
+        (${categoryName}, ${categoryColor}, ${userId})
+    `
 
     return res.status(201).json({
       success: true,
@@ -49,7 +64,14 @@ router.patch('/', async (req, res, next) => {
       throw new HttpError("Missing information for category update.", 400)
 
     const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`UPDATE categories SET category_name=${categoryName}, category_color=${categoryColor} WHERE user_id=${userId} AND category_id=${categoryId}`
+    await sql`
+      UPDATE categories
+      SET
+        category_name=${categoryName}, category_color=${categoryColor}
+      WHERE
+        user_id=${userId}
+        AND category_id=${categoryId}
+    `
 
     return res.status(200).json({
       success: true,

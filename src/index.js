@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = process.env.PORT || 3500;
 
+// Cross-origin resource sharing middleware to facilitate communication with front-end
+// with credentials to allow the use of cookies
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 app.use(express.json());
