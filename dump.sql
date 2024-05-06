@@ -124,6 +124,14 @@ ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
 --
 
 COPY public.categories (category_id, category_name, category_color, user_id) FROM stdin;
+1	Other	7A797B	\N
+2	Food	A4764D	\N
+3	Rent	F2BE80	\N
+4	Utilities	4E9A26	\N
+5	Transportation	1A5AB6	\N
+6	Taxes	OEODOE	\N
+7	Healthcare	AC1212	\N
+8	Entertainment	722B92	\N
 \.
 
 
@@ -147,7 +155,7 @@ COPY public.users (user_id, username, password, refresh_token) FROM stdin;
 -- Name: categories_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.categories_category_id_seq', 1, false);
+SELECT pg_catalog.setval('public.categories_category_id_seq', 8, true);
 
 
 --
