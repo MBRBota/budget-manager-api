@@ -71,7 +71,7 @@ CREATE TABLE public.expenses (
     expense_sum money NOT NULL,
     expense_date bigint NOT NULL,
     user_id integer NOT NULL,
-    category_id integer NOT NULL
+    category_id integer DEFAULT 1 NOT NULL
 );
 
 
@@ -201,7 +201,7 @@ ALTER TABLE ONLY public.users
 --
 
 ALTER TABLE ONLY public.categories
-    ADD CONSTRAINT categories_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT categories_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
 
 
 --
@@ -209,7 +209,7 @@ ALTER TABLE ONLY public.categories
 --
 
 ALTER TABLE ONLY public.expenses
-    ADD CONSTRAINT expenses_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(category_id);
+    ADD CONSTRAINT expenses_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(category_id) ON DELETE SET DEFAULT;
 
 
 --
@@ -217,7 +217,7 @@ ALTER TABLE ONLY public.expenses
 --
 
 ALTER TABLE ONLY public.expenses
-    ADD CONSTRAINT expenses_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
+    ADD CONSTRAINT expenses_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE;
 
 
 --
