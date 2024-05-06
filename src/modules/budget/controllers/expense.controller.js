@@ -10,7 +10,10 @@ router.get('/', async (req, res, next) => {
 
     const userExpenses = await sql`
       SELECT
-        expense_id, expense_sum, expense_date, category_id
+        expense_id AS expenseId,
+        expense_sum AS expenseSum,
+        expense_date AS expenseDate,
+        category_id AS categoryId
       FROM expenses
       INNER JOIN users
       USING (user_id)
