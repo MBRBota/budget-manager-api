@@ -52,22 +52,14 @@ ALTER TABLE public.categories OWNER TO postgres;
 -- Name: categories_category_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.categories_category_id_seq
-    AS integer
+ALTER TABLE public.categories ALTER COLUMN category_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.categories_category_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.categories_category_id_seq OWNER TO postgres;
-
---
--- Name: categories_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.categories_category_id_seq OWNED BY public.categories.category_id;
+    CACHE 1
+);
 
 
 --
@@ -76,8 +68,8 @@ ALTER SEQUENCE public.categories_category_id_seq OWNED BY public.categories.cate
 
 CREATE TABLE public.expenses (
     expense_id integer NOT NULL,
-    sum money NOT NULL,
-    date bigint NOT NULL,
+    expense_sum money NOT NULL,
+    expense_date bigint NOT NULL,
     user_id integer NOT NULL,
     category_id integer NOT NULL
 );
@@ -89,22 +81,14 @@ ALTER TABLE public.expenses OWNER TO postgres;
 -- Name: expenses_expense_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.expenses_expense_id_seq
-    AS integer
+ALTER TABLE public.expenses ALTER COLUMN expense_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.expenses_expense_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.expenses_expense_id_seq OWNER TO postgres;
-
---
--- Name: expenses_expense_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.expenses_expense_id_seq OWNED BY public.expenses.expense_id;
+    CACHE 1
+);
 
 
 --
@@ -125,43 +109,14 @@ ALTER TABLE public.users OWNER TO postgres;
 -- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.users_user_id_seq
-    AS integer
+ALTER TABLE public.users ALTER COLUMN user_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME public.users_user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.users_user_id_seq OWNER TO postgres;
-
---
--- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users.user_id;
-
-
---
--- Name: categories category_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.categories ALTER COLUMN category_id SET DEFAULT nextval('public.categories_category_id_seq'::regclass);
-
-
---
--- Name: expenses expense_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.expenses ALTER COLUMN expense_id SET DEFAULT nextval('public.expenses_expense_id_seq'::regclass);
-
-
---
--- Name: users user_id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+    CACHE 1
+);
 
 
 --
@@ -176,7 +131,7 @@ COPY public.categories (category_id, category_name, category_color, user_id) FRO
 -- Data for Name: expenses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.expenses (expense_id, sum, date, user_id, category_id) FROM stdin;
+COPY public.expenses (expense_id, expense_sum, expense_date, user_id, category_id) FROM stdin;
 \.
 
 
