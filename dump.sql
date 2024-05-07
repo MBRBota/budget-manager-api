@@ -68,7 +68,7 @@ ALTER TABLE public.categories ALTER COLUMN category_id ADD GENERATED ALWAYS AS I
 
 CREATE TABLE public.expenses (
     expense_id integer NOT NULL,
-    expense_sum money NOT NULL,
+    expense_sum numeric(19,4) NOT NULL,
     expense_date bigint NOT NULL,
     user_id integer NOT NULL,
     category_id integer DEFAULT 1 NOT NULL
