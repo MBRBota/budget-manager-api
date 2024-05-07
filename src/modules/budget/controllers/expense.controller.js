@@ -13,10 +13,14 @@ router.get('/', async (req, res, next) => {
         expense_id AS "expenseId",
         expense_sum AS "expenseSum",
         expense_date AS "expenseDate",
-        category_id AS "categoryId"
+        category_id AS "categoryId",
+        category_name AS "categoryName",
+        category_color AS "categoryColor"
       FROM expenses
       INNER JOIN users
       USING (user_id)
+      INNER JOIN categories
+      USING (category_id)
       WHERE username=${username}
     `
 
