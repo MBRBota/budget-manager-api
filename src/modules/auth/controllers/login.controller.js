@@ -29,7 +29,7 @@ router.post('/login', async (req, res, next) => {
     await sql`UPDATE users SET refresh_token=${ refreshToken } WHERE username=${ username }`
 
     // Max age set to 30 days
-    res.cookie('jwtRefreshToken', refreshToken, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 })
+    res.cookie('jwtRefreshToken', refreshToken, { httpOnly: true, secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 })
     return res.status(200).json({
       success: true,
       message: `Successfully logged into ${ username } account.`,
