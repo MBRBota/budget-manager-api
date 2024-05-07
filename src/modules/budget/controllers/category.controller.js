@@ -11,9 +11,9 @@ router.get('/', async (req, res, next) => {
     // Retrieve default (null user-id rows) and user-made custom categories
     const userCategories = await sql`
       SELECT
-        category_id AS categoryId,
-        category_name AS categoryName,
-        category_color AS categoryColor
+        category_id AS "categoryId",
+        category_name AS "categoryName",
+        category_color AS "categoryColor"
       FROM categories
       LEFT JOIN users
       USING (user_id)
