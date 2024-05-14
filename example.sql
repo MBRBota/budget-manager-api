@@ -129,7 +129,7 @@ COPY public.categories (category_id, category_name, category_color, user_id) FRO
 3	Rent	F2BE80	\N
 4	Utilities	4E9A26	\N
 5	Transportation	1A5AB6	\N
-6	Taxes	OEODOE	\N
+6	Taxes	0E0D0E	\N
 7	Healthcare	AC1212	\N
 8	Entertainment	722B92	\N
 \.
@@ -155,7 +155,7 @@ COPY public.expenses (expense_id, expense_sum, expense_date, user_id, category_i
 --
 
 COPY public.users (user_id, username, password, refresh_token) FROM stdin;
-1	Robert	$2b$10$ukpJbhcod7RwvasSKiMPV.vccB0PHVpIefE8.upP3HkAirtjpE8Wa	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydCIsImlhdCI6MTcxNTA4ODE1NCwiZXhwIjoxNzE3NjgwMTU0fQ.DEAa_ZQxIicwzzczy2XDcBpa-clQnTcsQXG2yo6dDh8
+1	Robert	$2b$10$pjMStpWpkmwtsHIinSzNR.e7QG3adpfbIStD.3eTQ7SJ8z0weomP2	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydCIsImlhdCI6MTcxNTY5NTY5MCwiZXhwIjoxNzE4Mjg3NjkwfQ.s3psjUcWOe0aWnS2mwEAOLGx2DySqrkZio97VBH7Jfs
 \.
 
 
