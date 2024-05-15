@@ -97,7 +97,7 @@ router.patch('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
   try{
     const username = req.username
-    const { categoryId } = req.body.category
+    const categoryId = req.body.category
 
     if (!categoryId)
       throw new HttpError("Missing category ID.", 400)
