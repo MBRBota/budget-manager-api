@@ -41,16 +41,21 @@ router.post('/', async (req, res, next) => {
       throw new HttpError("New category information incomplete/missing.", 400)
 
     const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`
+    const [newCategory] = await sql`
       INSERT INTO categories
         (category_name, category_color, user_id)
       VALUES
         (${categoryName}, ${categoryColor}, ${user_id})
+      RETURNING
+        category_id AS "categoryId",
+        category_name AS "categoryName",
+        category_color AS "categoryColor"
     `
 
     return res.status(201).json({
       success: true,
-      message: "Category added successfully."
+      message: "Category added successfully.",
+      data: { newCategory }
     })
   } catch (err) {
     next(err)

@@ -43,16 +43,30 @@ router.post('/', async (req, res, next) => {
       throw new HttpError("New expense information incomplete/missing.", 400)
 
     const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`
-      INSERT INTO expenses
-        (expense_sum, expense_date, user_id, category_id)
-      VALUES
-        (${expenseSum}, ${expenseDate}, ${user_id}, ${categoryId})
+    const [newExpense] = await sql`
+      WITH inserted AS (
+        INSERT INTO expenses
+          (expense_sum, expense_date, user_id, category_id)
+        VALUES
+          (${expenseSum}, ${expenseDate}, ${user_id}, ${categoryId})
+        RETURNING *
+      )
+      SELECT
+        expense_id AS "expenseId",
+        expense_sum AS "expenseSum",
+        expense_date AS "expenseDate",
+        category_id AS "categoryId",
+        category_name AS "categoryName",
+        category_color AS "categoryColor"
+      FROM inserted
+      INNER JOIN categories
+      USING (category_id)
       `
 
     return res.status(201).json({
       success: true,
-      message: "Expense added successfully."
+      message: "Expense added successfully.",
+      data: { newExpense }
     })
   } catch (err) {
     next(err)
