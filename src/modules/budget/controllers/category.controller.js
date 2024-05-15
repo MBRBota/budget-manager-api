@@ -71,18 +71,23 @@ router.patch('/', async (req, res, next) => {
       throw new HttpError("Missing information for category update.", 400)
 
     const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`
+    const [updatedCategory] = await sql`
       UPDATE categories
       SET
         category_name=${categoryName}, category_color=${categoryColor}
       WHERE
         user_id=${user_id}
         AND category_id=${categoryId}
+      RETURNING
+        category_id AS "categoryId",
+        category_name AS "categoryName",
+        category_color AS "categoryColor"
     `
 
     return res.status(200).json({
       success: true,
-      message: "Category updated successfully."
+      message: "Category updated successfully.",
+      data: { updatedCategory }
     })
   } catch (err) {
     next(err)
