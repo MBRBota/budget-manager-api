@@ -40,12 +40,12 @@ router.post('/', async (req, res, next) => {
     if (!categoryName || !categoryColor)
       throw new HttpError("New category information incomplete/missing.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
     await sql`
       INSERT INTO categories
         (category_name, category_color, user_id)
       VALUES
-        (${categoryName}, ${categoryColor}, ${userId})
+        (${categoryName}, ${categoryColor}, ${user_id})
     `
 
     return res.status(201).json({
@@ -65,13 +65,13 @@ router.patch('/', async (req, res, next) => {
     if (!categoryId || !categoryName || !categoryColor)
       throw new HttpError("Missing information for category update.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
     await sql`
       UPDATE categories
       SET
         category_name=${categoryName}, category_color=${categoryColor}
       WHERE
-        user_id=${userId}
+        user_id=${user_id}
         AND category_id=${categoryId}
     `
 
@@ -92,8 +92,8 @@ router.delete('/', async (req, res, next) => {
     if (!categoryId)
       throw new HttpError("Missing category ID.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`DELETE FROM categories WHERE category_id=${categoryId} AND user_id=${userId}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    await sql`DELETE FROM categories WHERE category_id=${categoryId} AND user_id=${user_id}`
 
     return res.status(200).json({
       success: true,

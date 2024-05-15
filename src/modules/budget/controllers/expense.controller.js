@@ -42,12 +42,12 @@ router.post('/', async (req, res, next) => {
     if (!expenseSum || !expenseDate || !categoryId)
       throw new HttpError("New expense information incomplete/missing.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
     await sql`
       INSERT INTO expenses
         (expense_sum, expense_date, user_id, category_id)
       VALUES
-        (${expenseSum}, ${expenseDate}, ${userId}, ${categoryId})
+        (${expenseSum}, ${expenseDate}, ${user_id}, ${categoryId})
       `
 
     return res.status(201).json({
@@ -67,13 +67,13 @@ router.patch('/', async (req, res, next) => {
     if (!expenseId || !expenseSum || !expenseDate || !categoryId)
       throw new HttpError("Missing information for expense update.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
     await sql`
       UPDATE expenses
       SET
         expense_sum=${expenseSum}, expense_date=${expenseDate}, category_id=${categoryId}
       WHERE
-        user_id=${userId}
+        user_id=${user_id}
         AND expense_id=${expenseId}
     `
 
@@ -94,8 +94,8 @@ router.delete('/', async (req, res, next) => {
     if (!expenseId)
       throw new HttpError("Missing expense ID.", 400)
 
-    const [userId] = await sql`SELECT user_id FROM users WHERE username=${username}`
-    await sql`DELETE FROM expenses WHERE expense_id=${expenseId} AND user_id=${userId}`
+    const [{user_id}] = await sql`SELECT user_id FROM users WHERE username=${username}`
+    await sql`DELETE FROM expenses WHERE expense_id=${expenseId} AND user_id=${user_id}`
 
     return res.status(200).json({
       success: true,
