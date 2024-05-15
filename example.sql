@@ -129,9 +129,10 @@ COPY public.categories (category_id, category_name, category_color, user_id) FRO
 3	Rent	F2BE80	\N
 4	Utilities	4E9A26	\N
 5	Transportation	1A5AB6	\N
-6	Taxes	0E0D0E	\N
 7	Healthcare	AC1212	\N
 8	Entertainment	722B92	\N
+6	Taxes	0E0D0E	\N
+9	Subscriptions	9FD16B	1
 \.
 
 
@@ -140,13 +141,18 @@ COPY public.categories (category_id, category_name, category_color, user_id) FRO
 --
 
 COPY public.expenses (expense_id, expense_sum, expense_date, user_id, category_id) FROM stdin;
-1	200.0000	1714521600000	1	1
-2	350.0000	1714521600000	1	1
-3	85.0000	1714521600000	1	1
 4	400.0000	1714597200000	1	1
 5	250.0000	1714770000000	1	1
 6	55.0000	1714856400000	1	1
 7	844.0000	1715029200000	1	1
+1	200.0000	1714521600000	1	1
+2	350.0000	1714521600000	1	1
+3	85.0000	1714521600000	1	1
+8	45.0000	1714510800000	1	2
+9	1500.0000	1715720400000	1	3
+10	120.0000	1714597200000	1	5
+11	145.0000	1714770000000	1	7
+12	114.0000	1715202000000	1	9
 \.
 
 
@@ -155,7 +161,7 @@ COPY public.expenses (expense_id, expense_sum, expense_date, user_id, category_i
 --
 
 COPY public.users (user_id, username, password, refresh_token) FROM stdin;
-1	Robert	$2b$10$pjMStpWpkmwtsHIinSzNR.e7QG3adpfbIStD.3eTQ7SJ8z0weomP2	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydCIsImlhdCI6MTcxNTY5NTY5MCwiZXhwIjoxNzE4Mjg3NjkwfQ.s3psjUcWOe0aWnS2mwEAOLGx2DySqrkZio97VBH7Jfs
+1	Robert	$2b$10$pjMStpWpkmwtsHIinSzNR.e7QG3adpfbIStD.3eTQ7SJ8z0weomP2	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydCIsImlhdCI6MTcxNTc1OTQxOCwiZXhwIjoxNzE4MzUxNDE4fQ.Ef0g1TyFkLsdd9B0zIEeBhrj3fUEwHlDJH-6Iz40rW8
 \.
 
 
@@ -163,14 +169,14 @@ COPY public.users (user_id, username, password, refresh_token) FROM stdin;
 -- Name: categories_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.categories_category_id_seq', 9, false);
+SELECT pg_catalog.setval('public.categories_category_id_seq', 9, true);
 
 
 --
 -- Name: expenses_expense_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.expenses_expense_id_seq', 7, true);
+SELECT pg_catalog.setval('public.expenses_expense_id_seq', 12, true);
 
 
 --
